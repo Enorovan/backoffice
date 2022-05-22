@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="products">
+  <br><br><br><br>
+  <h2>Veuillez sélectionner le produit dont vous voulez les informations : </h2>
+  <form>
+    <mat-form-field>
+      <input type="text" placeholder="Produit" aria-label="Produit" matInput [formControl]="autocomplete" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateSelected($event)" [displayWith]="displayFn">
+        <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+          {{ product.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <div *ngIf="selected" id="produitDiv">
+    <span>Nom : {{ selected.name }}</span>
+    <span>Prix : {{ selected.price | number: '1.2-2'  }}€</span>
+    <span *ngIf="selected.sale">Prix en solde : {{ selected.price_on_sale | number: '1.2-2' }}€</span>
+    <span *ngIf="selected.sale">Remise : {{ selected.discount }}%</span>
+    <md-input-container>
+      <input type="number" min="0" max="100" required mdInput placeholder="%" name="remise" [formControl]="formSale"><br>
+      <div *ngIf="formSale.errors">
+        <md-error *ngIf="formSale.dirty">Veuillez entrer un nombre entier</md-error>
+        <md-error *ngIf="formSale.errors.min"> supérieur à 0.</md-error>
+        <md-error *ngIf="formSale.errors.max"> inférieur à 100.</md-error>
+      </div>
+      <button mat-raised-button id="discount" color=primary [disabled]="!formSale.valid" (click)="updateProductSale(selected)"><mat-icon>send</mat-icon></button>
+    </md-input-container>
+    <span>Quantité en stock : {{ selected.quantity_stock }}</span>
+    <md-input-container>
+      <input type="number" min="0" required mdInput placeholder="Quantité" name="quantite" [formControl]="formStock"><br>
+      <div *ngIf="formStock.errors">
+        <md-error *ngIf="formStock.dirty">Veuillez entrer un nombre entier</md-error>
+        <md-error *ngIf="formStock.errors.min"> supérieur à 0.</md-error>
+      </div>
+      Invendu <mat-slide-toggle color="primary" [(ngModel)]="isSold"></mat-slide-toggle> Vendu<br>
+      <button mat-raised-button id="discount" color=primary [disabled]="!formStock.valid" (click)="removeStock(selected)"><mat-icon>remove</mat-icon></button>
+      &emsp;
+      <button mat-raised-button id="discount" color=primary [disabled]="!formStock.valid" (click)="addStock(selected)"><mat-icon>add</mat-icon></button>
+    </md-input-container>
+    <span>Quantité vendues : {{ selected.quantity_sold }}</span>
+    <span>Commentaires : {{ selected.comments }}</span>
+  </div>
+</div>

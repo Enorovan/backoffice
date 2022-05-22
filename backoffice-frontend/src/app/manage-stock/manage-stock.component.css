@@ -1,0 +1,48 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '../app.component.css';
+
+div {
+    text-align: center;
+}
+
+#send {
+    background-color: #282850; 
+    color: white;
+    margin: 20px 0;
+}
+
+#products {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#products td, #products th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    color: #282850;
+}
+  
+#products tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+  
+#products tr:hover {
+    background-color: #ddd;
+}
+  
+#products th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #282850;
+    color: white;
+}
+
+md-error {
+    font-size: 9px;
+    color: red;
+}
+
+.opIcon {
+    color: #282850;
+}

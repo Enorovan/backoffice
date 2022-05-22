@@ -1,0 +1,14 @@
+<app-navbar></app-navbar>
+
+<mat-form-field appearance="fill">
+    <mat-label>Année</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let h of history" [value]="h" (click)="createData(h.year)">
+        {{ h.year }}
+      </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div class="chart-wrapper" *ngIf="chart">
+    <canvas id="canvas" width="1024" height="576">{{ chart }}</canvas>
+</div>

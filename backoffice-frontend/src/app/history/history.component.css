@@ -1,0 +1,10 @@
+mat-form-field {
+    display: block;
+    margin-left: 40%;
+    margin-right: 40%;
+    color: #282850; 
+}
+
+#canvas {
+    margin: 0 auto;
+}

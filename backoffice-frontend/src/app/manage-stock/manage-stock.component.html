@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="products">
+    <div *ngFor="let category of [0, 1, 2]" [ngSwitch]="category">
+        <h2 *ngSwitchCase="0">Poissons</h2>
+        <h2 *ngSwitchCase="1">Fruits de mer</h2>
+        <h2 *ngSwitchCase="2">Crustacés</h2>
+        <table id="products">
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Prix en promotion</th>
+                <th>Remise</th>
+                <th>Quantité</th>
+                <th>Vendus</th>
+                <th>Commentaires</th>
+                <th>Modification Stock</th>
+                <th>Modification Remise</th>
+            </tr>
+            <tr *ngFor="let product of filterProductsOfCategory(category)">
+                <td>{{ product.name }}</td>
+                <td>{{ product.price | number: '1.2-2' }}€</td>
+                <td><a *ngIf="product.sale">{{ product.price_on_sale | number: '1.2-2' }}€</a></td>
+                <td><a *ngIf="product.sale">{{ product.discount }}%</a></td>
+                <td>{{ product.quantity_stock }}</td>
+                <td>{{ product.quantity_sold }}</td>
+                <td>{{ product.comments }}</td>
+                <td>
+                    <md-input-container>
+                        <input [(ngModel)]="product.updated_quantity_stock" type="number" min="0" placeholder="Quantité" required><br>
+                        <!--<div *ngIf="formStock.errors">
+                          <md-error *ngIf="formStock.dirty">Veuillez entrer un nombre entier</md-error>
+                          <md-error *ngIf="formStock.errors.min"> supérieur à 0.</md-error>
+                        </div>-->
+                    </md-input-container>
+                </td>
+                <td>
+                    <md-input-container>
+                        <input [(ngModel)]="product.updated_discount" type="number" min="0" max="100" placeholder="%" required><br>
+                        <!--<div *ngIf="formSale.errors">
+                            <md-error *ngIf="formSale.dirty">Veuillez entrer un nombre entier</md-error>
+                            <md-error *ngIf="formSale.errors.min"> supérieur à 0.</md-error>
+                            <md-error *ngIf="formSale.errors.max"> inférieur à 100.</md-error>
+                        </div>-->
+                    </md-input-container>
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div>
+    <div>
+        <span>Pour ajouter des produits, allez vers le plus et pour en retirer, allez vers le moins.</span><br>
+        <mat-icon class="opIcon">remove</mat-icon><mat-slide-toggle color="primary" [(ngModel)]="stockOperation"></mat-slide-toggle><mat-icon class="opIcon">add</mat-icon><br>
+        <button id="send" mat-raised-button (click)="updateAll()"><mat-icon>send</mat-icon></button>
+    </div>
+</div>
+
